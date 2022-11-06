@@ -7,7 +7,7 @@ import { VehiculoService } from '../vehiculo.service';
   templateUrl: './vehiculo-list.component.html',
   styleUrls: ['./vehiculo-list.component.css']
 })
-export class VehiculoListComponent implements OnInit,  AfterViewInit {
+export class VehiculoListComponent implements OnInit {
 
 
   constructor(
@@ -21,18 +21,27 @@ export class VehiculoListComponent implements OnInit,  AfterViewInit {
 
   ngOnInit(): void {
     this.getVehiculos();
-    this.updateNumbers();
 
   }
 
-  ngAfterViewInit(): void {
-    this.updateNumbers();
-  }
+
 
   getVehiculos(): void{
     this.vehiculoService.getVehiculos()
     .subscribe(vehiculos => {
       this.vehiculos = vehiculos;
+      for (let i = 0; i < vehiculos.length; i++) {
+        const element = vehiculos[i];
+        const marca=element.marca.toLowerCase();
+        if(marca=='renault'){
+          this.renault++;
+        }else if(marca=='chevrolet'){
+          this.chevrolet++;
+        }else if(marca=='nissan'){
+          this.nissan++;
+        }
+
+      }
     })
   }
 
